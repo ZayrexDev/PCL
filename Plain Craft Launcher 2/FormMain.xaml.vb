@@ -418,8 +418,8 @@ Public Class FormMain
             If Settings.Get(Of Integer)("SystemEulaVersion") < EulaVersion Then
                 Select Case MyMsgBox(
                     If(Settings.Get(Of Integer)("SystemEulaVersion") = 0,
-                        "在使用 PCL 前，请先阅读用户协议与免责声明。",
-                        $"PCL 的用户协议与免责声明已更新。{vbCrLf}请阅读更新后的用户协议与免责声明。"),
+                        "警告：这是一份定制的PCL版本。此版本使用了私人的授权Token，若无特殊情况请勿外传。{vbCrLf}另外，你还需要同意原版PCL的用户协议。",
+                        $"警告：这是一份定制的PCL版本。此版本使用了私人的授权Token，若无特殊情况请勿外传。{vbCrLf}另外，你还需要同意原版PCL的用户协议。"),
                         "协议授权", "同意", "拒绝", "查看用户协议与免责声明",
                         Button3Action:=Sub() OpenWebsite("https://shimo.im/docs/rGrd8pY8xWkt6ryW"))
                     Case 1
@@ -447,10 +447,6 @@ Public Class FormMain
             End Try
             '上报
             Telemetry("启动")
-            '开源版本提示
-            If VersionBranchMain = "OpenSource" Then
-                MyMsgBox($"该版本中无法使用以下特性：{vbCrLf}- CurseForge API 调用：需要自行申请 API Key，然后添加到 ModSecret.vb 的开头{vbCrLf}- 正版登录：需要自行向微软申请 Client ID，然后添加到 ModSecret.vb 的开头{vbCrLf}- 更新与联网通知：避免滥用隐患{vbCrLf}- 主题切换：这是需要赞助解锁的纪念性质的功能，别让赞助者太伤心啦……{vbCrLf}- 百宝箱：开发早期往里面塞了些开发工具，整理起来太麻烦了……", "开源版本说明")
-            End If
         End Sub, "初始化", ThreadPriority.Lowest)
 
         Logger.Info($"第三阶段加载用时：{GetTimeMs() - ApplicationStartTick} ms")
