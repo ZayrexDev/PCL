@@ -51,10 +51,34 @@ jobs:
 
 
     - name: Replace
+      shell: pwsh
+      env:
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
       run: |
-        (gc "Plain Craft Launcher 2\Modules\ModSecret.vb") -replace 'Public OAuthClientId As String = If(Environment.GetEnvironmentVariable("PCL_MS_CLIENT_ID"), "")', 'Public OAuthClientId As String = If(Environment.GetEnvironmentVariable("PCL_MS_CLIENT_ID"), "${{ secrets.CLIENT_ID }}")' | Out-File "Plain Craft Launcher 2\Modules\ModSecret.vb"
-        (gc "Plain Craft Launcher 2\Modules\ModSecret.vb") -replace 'Public CurseForgeAPIKey As String = If(Environment.GetEnvironmentVariable("PCL_CURSEFORGE_API_KEY"), "")', 'Public CurseForgeAPIKey As String = If(Environment.GetEnvironmentVariable("PCL_CURSEFORGE_API_KEY"), "${{ secrets.CURSEFORGE_API_KEY }}")' | Out-File "Plain Craft Launcher 2\Modules\ModSecret.vb"
-        (gc "Plain Craft Launcher 2\Modules\Base\ModBase.vb") -replace 'Public Const CommitHash As String = ""', 'Public Const CommitHash As String = "${{ github.sha }}"' | Out-File "Plain Craft Launcher 2\Modules\Base\ModBase.vb"
+        $file = "Plain Craft Launcher 2\Modules\ModSecret.vb"
+        $content = Get-Content -LiteralPath $file -Raw
+
+        if ($env:CLIENT_ID) {
+          $old = 'Public OAuthClientId As String = If(Environment.GetEnvironmentVariable("PCL_MS_CLIENT_ID"), "")'
+          $new = 'Public OAuthClientId As String = If(Environment.GetEnvironmentVariable("PCL_MS_CLIENT_ID"), "{0}")' -f $env:CLIENT_ID.Replace('"', '""')
+          if (-not $content.Contains($old)) { throw "OAuthClientId declaration not found" }
+          $content = $content.Replace($old, $new)
+        }
+
+        if ($env:CURSEFORGE_API_KEY) {
+          $old = 'Public CurseForgeAPIKey As String = If(Environment.GetEnvironmentVariable("PCL_CURSEFORGE_API_KEY"), "")'
+          $new = 'Public CurseForgeAPIKey As String = If(Environment.GetEnvironmentVariable("PCL_CURSEFORGE_API_KEY"), "{0}")' -f $env:CURSEFORGE_API_KEY.Replace('"', '""')
+          if (-not $content.Contains($old)) { throw "CurseForgeAPIKey declaration not found" }
+          $content = $content.Replace($old, $new)
+        }
+
+        Set-Content -LiteralPath $file -Value $content -NoNewline -Encoding utf8
+
+        $file = "Plain Craft Launcher 2\Modules\Base\ModBase.vb"
+        $content = Get-Content -LiteralPath $file -Raw
+        $content = $content.Replace('Public Const CommitHash As String = ""', 'Public Const CommitHash As String = "${{ github.sha }}"')
+        Set-Content -LiteralPath $file -Value $content -NoNewline -Encoding utf8   
         
     - name: Restore NuGet Packages
       run: dotnet restore PCLCS\PCLCS.csproj
