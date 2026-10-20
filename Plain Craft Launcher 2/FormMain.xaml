@@ -115,8 +115,10 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         
-                    <Path x:Name="ShapeTitleLogo" SnapsToDevicePixels="False" UseLayoutRounding="False" IsHitTestVisible="False" HorizontalAlignment="Left" Margin="19,15.5,0,15.5" Stretch="Uniform" Fill="White" Width="39" Height="39"
-                        Data="
+                    <Path x:Name="ShapeTitleLogo" SnapsToDevicePixels="False" 
+                            UseLayoutRounding="False" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Margin="19,0,0,0" Stretch="Uniform" Fill="White" Width="39" Height="39"
+                            Data="
                                 M780.145 365C792.842 365 801.549 374.432 801.549 387.492V508.295C801.549 521.355 792.842 530.787 780.145 530.787C767.086 530.787 758.742 521.355 758.742 508.295V387.492C758.742 374.432 767.086 365 780.145 365ZM780.145 607.694C764.546 607.694 752.212 595.36 752.212 579.761C752.212 564.525 764.546 552.19 780.145 552.19C795.745 552.19 808.079 564.525 808.079 579.761C808.079 595.36 795.745 607.694 780.145 607.694Z
 
                                 M701.968 423.406C715.028 423.406 723.372 432.838 723.372 445.535V525.708C723.372 584.84 686.915 607.694 642.656 607.694C598.035 607.694 561.578 584.84 561.578 525.708V445.535C561.578 432.838 569.922 423.406 582.982 423.406C595.679 423.406 604.385 432.838 604.385 445.535V522.806C604.385 555.092 617.988 567.789 642.656 567.789C666.962 567.789 680.565 555.092 680.565 522.806V445.535C680.565 432.838 689.271 423.406 701.968 423.406Z
