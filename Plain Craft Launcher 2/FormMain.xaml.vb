@@ -418,8 +418,8 @@ Public Class FormMain
             If Settings.Get(Of Integer)("SystemEulaVersion") < EulaVersion Then
                 Select Case MyMsgBox(
                     If(Settings.Get(Of Integer)("SystemEulaVersion") = 0,
-                        "警告：这是一份定制的PCL版本。此版本使用了私人的授权Token，若无特殊情况请勿外传。{vbCrLf}另外，你还需要同意原版PCL的用户协议。",
-                        $"警告：这是一份定制的PCL版本。此版本使用了私人的授权Token，若无特殊情况请勿外传。{vbCrLf}另外，你还需要同意原版PCL的用户协议。"),
+                        $"警告：这是一份定制的PCL版本。{vbCrLf}此版本使用了私人的授权Token，若无特殊情况请勿外传。{vbCrLf}另外，你还需要同意原版PCL的用户协议。",
+                        $"警告：这是一份定制的PCL版本。{vbCrLf}此版本使用了私人的授权Token，若无特殊情况请勿外传。{vbCrLf}另外，你还需要同意原版PCL的用户协议。"),
                         "协议授权", "同意", "拒绝", "查看用户协议与免责声明",
                         Button3Action:=Sub() OpenWebsite("https://shimo.im/docs/rGrd8pY8xWkt6ryW"))
                     Case 1
